@@ -1,12 +1,11 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-//  Created by Sam Deane on 06/09/2021.
-//  All code (c) 2021 - present day, Elegant Chaos.
+//  Created by Sam Deane on 06/09/21.
+//  All code (c) 2021 - present day, Elegant Chaos Limited.
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 import SwiftUI
 
-public struct LabelledGrid<Content>: View where Content: View {
-
+public struct LabelledStack<Content>: View where Content: View {
     let labelSpacing: GridItem
     let contentSpacing: GridItem
     let suffixSpacing: GridItem
@@ -22,14 +21,13 @@ public struct LabelledGrid<Content>: View where Content: View {
             self.labelSpacing = labelSpacing
             self.contentSpacing = contentSpacing
             self.suffixSpacing = suffixSpacing
-            self.context = LabelledGridContext(mode: .grid, style: style)
+            self.context = LabelledGridContext(mode: .stack, style: style)
             self.content = content
         }
     
     public var body: some View {
-        let columns = [labelSpacing, contentSpacing, suffixSpacing]
-        
-        return LazyVGrid(columns: columns, content: content)
+        return VStack(alignment: .leading, content: content)
             .environmentObject(context)
     }
 }
+
