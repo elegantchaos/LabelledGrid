@@ -1,4 +1,4 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.4
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 //  Created by Sam Deane on 06/09/2021.
@@ -10,7 +10,7 @@ import PackageDescription
 let package = Package(
     name: "LabelledGrid",
     platforms: [
-        .macOS(.v10_13), .iOS(.v13), .tvOS(.v13), .watchOS(.v6)
+        .macOS(.v10_13), .iOS(.v14), .tvOS(.v13), .watchOS(.v6)
     ],
     products: [
         .library(

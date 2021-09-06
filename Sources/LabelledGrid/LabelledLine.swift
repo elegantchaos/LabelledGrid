@@ -5,41 +5,60 @@
 
 import SwiftUI
 
-struct LabelledLine<Content, Suffix>: View where Content: View, Suffix: View {
-    typealias ContentBuilder = () -> Content
-    typealias SuffixBuilder = () -> Suffix
+public struct LabelledLine<Content, Suffix>: View where Suffix: View, Content: View  {
+    public typealias ContentBuilder = () -> Content
+    public typealias SuffixBuilder = () -> Suffix
 
-    let label: String
-    let icon: String
-    @ViewBuilder let content: ContentBuilder
-    @ViewBuilder let suffix: SuffixBuilder?
+    public let label: String
+    public let icon: String
+    @ViewBuilder public let content: ContentBuilder
+    @ViewBuilder public let suffix: SuffixBuilder
 
-    internal init(_ label: String, icon: String, content: @escaping ContentBuilder, suffix: SuffixBuilder? = nil) {
+    public init(_ label: String, icon: String, content: @escaping ContentBuilder, suffix: @escaping SuffixBuilder) {
         self.label = label
         self.icon = icon
         self.content = content
         self.suffix = suffix
     }
 
-    internal init(_ label: String, icon: String, suffix: String? = nil, content: @escaping ContentBuilder) {
-        let sb: SuffixBuilder?
-        if let suffix = suffix {
-            sb = { Text(suffix) } as! SuffixBuilder
-        } else {
-            sb = nil
+    public init(_ label: String, icon: String, suffix: String, content: @escaping ContentBuilder) where Suffix == Text {
+        self.init(label, icon: icon, content: content) {
+            Text(suffix)
         }
+    }
 
-        self.init(label, icon: icon, content: content, suffix: sb)
+    public var body: some View {
+        Group {
+            Label(label, systemImage: icon)
+            content()
+            suffix()
+        }
+    }
+    
+}
+
+
+struct Entry<Content>: View where Content: View {
+    let label: String
+    let icon: String
+    let suffix: String
+    @ViewBuilder let content: () -> Content
+
+    internal init(_ label: String, icon: String, suffix: String = "", content: @escaping () -> Content) {
+        self.label = label
+        self.icon = icon
+        self.suffix = suffix
+        self.content = content
     }
 
     var body: some View {
         Group {
             Label(label, systemImage: icon)
             content()
-            if suffix {
-                Suffix()
-            } else {
+            if suffix.isEmpty {
                 Spacer()
+            } else {
+                Text(suffix)
             }
         }
     }
