@@ -14,22 +14,26 @@ public struct LabelledPicker<Value, Suffix>: View where Value: LabelledPickerVal
 
     let label: String
     let icon: String
-    let prompt: String
     let value: Binding<Value>
     let values: [Value]
     @ViewBuilder public let suffix: SuffixBuilder
 
-    public init(_ label: String, icon: String, prompt: String = "", value: Binding<Value>, values: [Value], @ViewBuilder suffix: @escaping SuffixBuilder) {
+    public init(_ label: String, icon: String, value: Binding<Value>, values: [Value], @ViewBuilder suffix: @escaping SuffixBuilder) {
         self.label = label
         self.icon = icon
-        self.prompt = prompt
         self.value = value
         self.values = values
         self.suffix = suffix
     }
 
-    public init(_ label: String, icon: String, prompt: String = "", value: Binding<Value>, values: [Value]) where Suffix == Spacer {
-        self.init(label, icon: icon, prompt: prompt, value: value, values: values) {
+    public init(_ label: String, icon: String, value: Binding<Value>, values: [Value]) where Suffix == Spacer {
+        self.init(label, icon: icon, value: value, values: values) {
+            Spacer()
+        }
+    }
+
+    public init(_ label: String, icon: String, value: Binding<Value>) where Suffix == Spacer, Value: CaseIterable {
+        self.init(label, icon: icon, value: value, values: Array(Value.allCases)) {
             Spacer()
         }
     }
