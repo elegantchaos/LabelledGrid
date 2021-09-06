@@ -21,6 +21,12 @@ public struct LabelledLine<Content, Suffix>: View where Suffix: View, Content: V
         self.suffix = suffix
     }
 
+    public init(_ label: String, icon: String, content: @escaping ContentBuilder) where Suffix == Spacer {
+        self.init(label, icon: icon, content: content) {
+            Spacer()
+        }
+    }
+
     public init(_ label: String, icon: String, suffix: String, content: @escaping ContentBuilder) where Suffix == Text {
         self.init(label, icon: icon, content: content) {
             Text(suffix)
@@ -35,31 +41,4 @@ public struct LabelledLine<Content, Suffix>: View where Suffix: View, Content: V
         }
     }
     
-}
-
-
-struct Entry<Content>: View where Content: View {
-    let label: String
-    let icon: String
-    let suffix: String
-    @ViewBuilder let content: () -> Content
-
-    internal init(_ label: String, icon: String, suffix: String = "", content: @escaping () -> Content) {
-        self.label = label
-        self.icon = icon
-        self.suffix = suffix
-        self.content = content
-    }
-
-    var body: some View {
-        Group {
-            Label(label, systemImage: icon)
-            content()
-            if suffix.isEmpty {
-                Spacer()
-            } else {
-                Text(suffix)
-            }
-        }
-    }
 }
