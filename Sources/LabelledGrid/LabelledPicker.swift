@@ -3,10 +3,10 @@
 //  All code (c) 2021 - present day, Elegant Chaos Limited.
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+import Labelled
 import SwiftUI
 
-public protocol LabelledPickerValue: Hashable, Identifiable {
-    var label: String { get }
+public protocol LabelledPickerValue: Labelled, Hashable, Identifiable {
 }
 
 public struct LabelledPicker<Value, Suffix>: View where Value: LabelledPickerValue, Suffix: View {
@@ -40,9 +40,22 @@ public struct LabelledPicker<Value, Suffix>: View where Value: LabelledPickerVal
 
     public var body: some View {
         LabelledLine(label, icon: icon, content: {
-            Picker(value.wrappedValue.label, selection: value) {
+            Picker(selection: value) {
                 ForEach(values) { value in
-                    Text(value.label)
+                    if value.labelIcon.isEmpty {
+                        Text(value.labelName)
+                    } else {
+                        value.label
+                    }
+                }
+            } label: {
+                let value = value.wrappedValue
+                if value.labelIcon.isEmpty {
+                    Text(value.labelName)
+                } else {
+                    value.label
+                        .font(.title)
+                        .foregroundColor(.red)
                 }
             }
             .modifier(LabelledPickerStyle())

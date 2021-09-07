@@ -36,9 +36,12 @@ public struct LabelledLine<Content, Suffix>: View where Suffix: View, Content: V
     }
 
     public var body: some View {
+        let style = context.style
         Group {
             Label(label, systemImage: icon)
-
+                .foregroundColor(style.labelColor)
+                .font(style.labelFont)
+            
             switch context.mode {
                 case .grid:
                     content()

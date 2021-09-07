@@ -46,6 +46,8 @@ struct LabelledField_Previews: PreviewProvider {
         let hPadding: CGFloat = 0
         let background = Color(.red)
         let cornerRadius: CGFloat = 0
+        let labelFont = Font.headline
+        let labelColor = Color.blue
     }
     
     static var previews: some View {
