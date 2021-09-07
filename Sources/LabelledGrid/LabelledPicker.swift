@@ -39,13 +39,15 @@ public struct LabelledPicker<Value, Suffix>: View where Value: LabelledPickerVal
     }
 
     public var body: some View {
-        LabelledLine(label, icon: icon, content: {
+        return LabelledLine(label, icon: icon, content: {
             Picker(selection: value) {
                 ForEach(values) { value in
                     if value.labelIcon.isEmpty {
                         Text(value.labelName)
+                            .tag(value)
                     } else {
                         value.label
+                            .tag(value)
                     }
                 }
             } label: {
