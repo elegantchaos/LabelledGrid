@@ -18,7 +18,7 @@ let package = Package(
             targets: ["LabelledGrid"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/elegantchaos/Labelled.git", from: "1.0.2"),
+        .package(url: "https://github.com/elegantchaos/Labelled.git", from: "1.0.4"),
         .package(url: "https://github.com/elegantchaos/XCTestExtensions.git", from: "1.3.1")
     ],
     targets: [
