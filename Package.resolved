@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Labelled",
+        "repositoryURL": "https://github.com/elegantchaos/Labelled.git",
+        "state": {
+          "branch": null,
+          "revision": "303c28c7d4ad40ce6ee6c6937461856b5a68f121",
+          "version": "1.0.6"
+        }
+      },
+      {
         "package": "XCTestExtensions",
         "repositoryURL": "https://github.com/elegantchaos/XCTestExtensions.git",
         "state": {

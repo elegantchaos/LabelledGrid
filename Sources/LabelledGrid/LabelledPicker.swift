@@ -4,6 +4,7 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 import Labelled
+import LabelledKit
 import SwiftUI
 
 public protocol LabelledPickerValue: Labelled, Hashable, Identifiable {
@@ -14,15 +15,15 @@ public struct LabelledPicker<Value, Suffix>: View where Value: LabelledPickerVal
 
     let label: String
     let icon: String
-    let value: Binding<Value>
-    let values: [Value]
+    let currentValue: Binding<Value>
+    let possibleValues: [Value]
     @ViewBuilder public let suffix: SuffixBuilder
 
     public init(_ label: String, icon: String, value: Binding<Value>, values: [Value], @ViewBuilder suffix: @escaping SuffixBuilder) {
         self.label = label
         self.icon = icon
-        self.value = value
-        self.values = values
+        self.currentValue = value
+        self.possibleValues = values
         self.suffix = suffix
     }
 
@@ -40,25 +41,13 @@ public struct LabelledPicker<Value, Suffix>: View where Value: LabelledPickerVal
 
     public var body: some View {
         return LabelledLine(label, icon: icon, content: {
-            Picker(selection: value) {
-                ForEach(values) { value in
-                    if value.labelIcon.isEmpty {
-                        Text(value.labelName)
-                            .tag(value)
-                    } else {
-                        value.label
-                            .tag(value)
-                    }
+            Picker(selection: currentValue) {
+                ForEach(possibleValues) { value in
+                    SimpleLabel(value)
+                        .tag(value)
                 }
             } label: {
-                let value = value.wrappedValue
-                if value.labelIcon.isEmpty {
-                    Text(value.labelName)
-                } else {
-                    value.label
-                        .font(.title)
-                        .foregroundColor(.red)
-                }
+                Label(currentValue.wrappedValue)
             }
             .modifier(LabelledPickerStyle())
         }, suffix: suffix)

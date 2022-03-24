@@ -10,6 +10,11 @@ public struct LabelledPickerStyle: ViewModifier {
     
     public func body(content: Content) -> some View {
         content
+        #if os(tvOS)
+            .pickerStyle(DefaultPickerStyle())
+        #else
             .pickerStyle(.menu)
+        #endif
     }
 }
+

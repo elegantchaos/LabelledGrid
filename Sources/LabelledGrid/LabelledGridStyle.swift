@@ -19,11 +19,20 @@ public struct DefaultStyle: LabelledGridStyle {
 
     public let padding: CGFloat = 4
     public let hPadding: CGFloat = 16
-    public let background = Color(.systemGray6)
+    public let background: Color = .defaultGridBackground
     public let cornerRadius: CGFloat = 8
     public var labelColor: Color { Color.primary.opacity(0.8) }
     public var labelFont: Font { Font.body }
 
     public init() {
     }
+}
+
+
+extension Color {
+#if os(tvOS)
+    static let defaultGridBackground = Color(.systemGray)
+    #else
+    static let defaultGridBackground = Color(.systemGray6)
+#endif
 }
